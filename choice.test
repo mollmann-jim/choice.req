@@ -1,0 +1,11 @@
+Top
+Top, 2, top#1, Lvl2, Lvl3, XXX
+Top, 3, top#2, Lvl2, Lvl4
+Lvl2, 3, l2#1, Lvl5
+Lvl2, 2, l2#2, Lvl3, Lvl5
+Lvl3, 3, NONE
+Lvl3, 1, l3#2, Lvl4
+Lvl4, 2, l4#1
+Lvl4, 2, l4#2
+Lvl5, 4, NONE
+Lvl5, 1, l5#1, Lvl3
