@@ -31,6 +31,9 @@ def choose(item):
     if count.get(item, 0) == 0:
         print("item:", item, "is undefined")
         return
+    if item in supplies:
+        haves[supplies[item]] = True
+        print("have", supplies[item])
     pick = randint(0, count[item] - 1)
     choice = description[item][pick]
     nexts = target[item][pick]
@@ -44,6 +47,13 @@ def choose(item):
     else:
         choices[section].append(item + " :" + choice)
     for nextchoice in nexts:
+        nextchoice = nextchoice.strip()
+        if nextchoice in requires:
+            print(nextchoice, "requires", requires[nextchoice])
+            if not haves.setdefault(nextchoice, False):
+                print("don't have it")
+                continue
+            print("got it!")
         choose(nextchoice.strip())
     return
 
@@ -73,11 +83,11 @@ for line in lines:
     item = item.strip()
     odds = nexts.pop(0).strip()
     if odds == 'R':
-        print "requires"
-        requires.setdefault(item, []).append(odds)
-    elif odds == 'P':
-        print "supplies"
-        supplies.setdefault(item, []).append(odds)
+        #print(item, "requires", nexts[0].strip())
+        requires[item] = nexts.pop(0).strip()
+    elif odds == 'S':
+        #print (item, "supplies", nexts[0].strip())
+        supplies[item] = nexts.pop(0).strip()
     else:
         odds = int(odds)
         desc = nexts.pop(0)
