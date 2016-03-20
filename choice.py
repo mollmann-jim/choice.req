@@ -7,8 +7,11 @@ description = {}
 target = {}
 lines = []
 choices = [[]]
+haves = {}
+requires = {}
+supplies = {}
 file = 'choice.test'
-if sys.argv[1]:
+if len(sys.argv) > 1:
     file = sys.argv[1]
 
 def incfile(file):
@@ -68,15 +71,23 @@ for line in lines:
     nexts = line.split(',')
     item = nexts.pop(0)
     item = item.strip()
-    odds = int(nexts.pop(0))
-    desc = nexts.pop(0)
-#    print("item:", item, "odds:", odds, "desc:", desc, "nexts:",nexts)
-    for i in range(odds):
-        count[item] = count.get(item, 0)
-#        print("cnt[", item, "] =", count[item])
-        description.setdefault(item,[]).append(desc)
-        target.setdefault(item,[]).append(nexts)
-        count[item] = count.get(item, 0) + 1
+    odds = nexts.pop(0).strip()
+    if odds == 'R':
+        print "requires"
+        requires.setdefault(item, []).append(odds)
+    elif odds == 'P':
+        print "supplies"
+        supplies.setdefault(item, []).append(odds)
+    else:
+        odds = int(odds)
+        desc = nexts.pop(0)
+#        print("item:", item, "odds:", odds, "desc:", desc, "nexts:",nexts)
+        for i in range(odds):
+            count[item] = count.get(item, 0)
+#            print("cnt[", item, "] =", count[item])
+            description.setdefault(item,[]).append(desc)
+            target.setdefault(item,[]).append(nexts)
+            count[item] = count.get(item, 0) + 1
 #print "=========================================="
 #print description
 #print count
