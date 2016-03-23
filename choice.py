@@ -2,6 +2,8 @@
 from random import randint
 import sys
 
+#sys.setrecursionlimit(25)
+
 count = {}
 description = {}
 target = {}
@@ -44,16 +46,21 @@ def choose(item):
         if len(choices[section]) > 0:
             choices.append([])
             section = len(choices)
+            answer = sys.stdin.readline()
+            if answer.strip() == 'q':
+                sys.exit()
     else:
-        choices[section].append(item + " :" + choice)
+        thisline = item + " :" + choice
+        choices[section].append(thisline)
+        print thisline
     for nextchoice in nexts:
         nextchoice = nextchoice.strip()
         if nextchoice in requires:
-            print(nextchoice, "requires", requires[nextchoice])
-            if not haves.setdefault(nextchoice, False):
-                print("don't have it")
+            #print(nextchoice, "requires", requires[nextchoice])
+            if not haves.setdefault(requires[nextchoice], False):
+                print(requires[nextchoice], "don't have it")
                 continue
-            print("got it!")
+            #print("got it!")
         choose(nextchoice.strip())
     return
 
